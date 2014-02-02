@@ -5,13 +5,15 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.JLabel;
 
 @SuppressWarnings("serial")
-public class mCircle extends JLabel implements MouseMotionListener {
+public class mCircle extends JLabel{
 	
 	int x, y, r, Xc, Yc,sR;
 	Color current;
@@ -21,12 +23,11 @@ public class mCircle extends JLabel implements MouseMotionListener {
 	private int decayTime;
 	
 	
-	public mCircle(int x,  int y, int r) {
-		this.addMouseMotionListener(this);
+	public mCircle(int x,  int y, int r, int sensitivity) {
 		this.x = x;
 		this.y = y;
 		this.r = r;
-		this.sR = this.r + 10;
+		this.sR = this.r + sensitivity;
 		this.active = true;
 		Xc = x + r/2;
 		Yc = y + r/2;
@@ -34,7 +35,6 @@ public class mCircle extends JLabel implements MouseMotionListener {
 		sw = new StopWatch();
 		this.decayTime = 3;
 		timer.schedule(new UpdateTask(this),  0, 500);
-
 	}
 	
     private void doDrawing(Graphics g) {
@@ -50,7 +50,7 @@ public class mCircle extends JLabel implements MouseMotionListener {
                RenderingHints.VALUE_RENDER_QUALITY);
 
         g2d.setRenderingHints(rh);
-        g2d.fillOval(x, y, r, r);   
+        g2d.fillOval(0, 0, r, r);   
    } 
 
     @Override
@@ -74,9 +74,6 @@ public class mCircle extends JLabel implements MouseMotionListener {
         
      }
 
-     public void mouseDragged(MouseEvent e) {
-        
-     }   
 
      public void log(Object o){
     	 System.out.println(o.toString());
