@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.Random;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 
 
@@ -12,21 +13,23 @@ import javax.swing.JFrame;
 @SuppressWarnings("serial")
 public class WorkingMemory extends JFrame implements MouseMotionListener{
 
-	static mCircle[] mems;
+	static LTCircle[] longTermMemories;
 	static int numMem = 1000, width = 1200, height = 800,radius = 10, sensitivity = 20;
 	
 	public WorkingMemory() {
 		addMouseMotionListener(this);
-    	mems = new mCircle[numMem];
+		longTermMemories = new LTCircle[numMem];
     	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        initUI(getContentPane());
+    	JPanel longTerm = new JPanel();
+    	initLongTerm(longTerm);
         setSize(width, height);
         setLocationRelativeTo(null);
-        getContentPane().setBackground(Color.black);
+        longTerm.setBackground(Color.black);
+        getContentPane().add(longTerm);
         setVisible(true);
     }
     
-    private void initUI(Container pane) {
+    private void initLongTerm(Container pane) {
 
     	pane.setLayout(null);
         
@@ -34,10 +37,10 @@ public class WorkingMemory extends JFrame implements MouseMotionListener{
         for (int i = 0; i < numMem; i++){
         	int x = rand.nextInt(width- radius) + radius;
         	int y = rand.nextInt(height- radius) + radius;
-        	mems[i] = new mCircle(x,y,radius,sensitivity);
-        	mems[i].setVisible(true);
-        	pane.add(mems[i]);
-        	mems[i].setBounds(x, y, radius*2, radius*2);
+        	longTermMemories[i] = new LTCircle(x,y,radius,sensitivity);
+        	longTermMemories[i].setVisible(true);
+        	pane.add(longTermMemories[i]);
+        	longTermMemories[i].setBounds(x, y, radius*2, radius*2);
         }      
     }
 
@@ -49,7 +52,8 @@ public class WorkingMemory extends JFrame implements MouseMotionListener{
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
+            @SuppressWarnings("unused")
+			public void run() {
             	WorkingMemory wm = new WorkingMemory();
             }
         });
@@ -58,7 +62,7 @@ public class WorkingMemory extends JFrame implements MouseMotionListener{
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		for (mCircle m : mems) {
+		for (LTCircle m : longTermMemories) {
 			m.mouseMoved(e);
 		}
 	}
