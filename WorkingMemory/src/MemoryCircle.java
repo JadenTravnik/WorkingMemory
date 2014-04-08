@@ -14,10 +14,11 @@ public class MemoryCircle extends JLabel{
 			int x, y, r, Xc, Yc,sR;
 			Color current;
 			StopWatch sw;
+			float activity;
 			boolean active;
 			protected Timer timer = new Timer();
 			protected int decayTime;
-			
+			float decayRate = .8f;
 			
 			public MemoryCircle(int x,  int y, int r, int sensitivity) {
 				this.x = x;
@@ -30,7 +31,7 @@ public class MemoryCircle extends JLabel{
 				current = Color.black;
 				sw = new StopWatch();
 				this.decayTime = 3;
-				timer.schedule(new MemoryCirlceUpdateTask(this),  0, 500);
+				timer.schedule(new MemoryCirlceUpdateTask(this),  0, 250);
 			}
 			
 		    private void doDrawing(Graphics g) {
@@ -60,6 +61,10 @@ public class MemoryCircle extends JLabel{
 		    	
 		    }
 
+		    public void prime(float amount){
+				float hsbVals[] = Color.RGBtoHSB(current.getRed(), current.getGreen(), current.getBlue(), null);
+				current = Color.getHSBColor(hsbVals[0], hsbVals[1], amount + hsbVals[2]);
+		    }
 
 		     public void log(Object o){
 		    	 System.out.println(o.toString());
@@ -77,12 +82,14 @@ public class MemoryCircle extends JLabel{
 					EventQueue.invokeLater(new Runnable(){
 						public void run() {
 							if(!active){
-								if(sw.getElapsedTimeSecs() < decayTime){
-									current = current.darker();
+								float hsbVals[] = Color.RGBtoHSB(current.getRed(), current.getGreen(), current.getBlue(), null);
+								if(hsbVals[2] > 0.05){
+									hsbVals[2] = (hsbVals[2] < .7) ? (float) (hsbVals[2] * hsbVals[2]) : (float) (.8f * hsbVals[2]);
+									current = Color.getHSBColor(hsbVals[0], hsbVals[1], hsbVals[2]);
 								}
 								else {
 									sw.stop();
-									current = Color.black;
+									current = new Color(82,4,199);
 								}
 								m.repaint();
 							}

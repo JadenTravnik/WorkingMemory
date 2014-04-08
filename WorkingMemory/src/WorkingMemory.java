@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 public class WorkingMemory extends JFrame implements MouseMotionListener{
 
 	static LTCircle[] longTermMemories;
-	static int numMem = 1000, width = 1200, height = 800,radius = 10, sensitivity = 20;
+	static int numMem = 1000, width = 1200, height = 800,radius = 10, sensitivity = 100;
 	
 	public WorkingMemory() {
 		addMouseMotionListener(this);

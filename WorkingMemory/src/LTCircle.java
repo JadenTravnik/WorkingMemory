@@ -11,9 +11,14 @@ public class LTCircle extends MemoryCircle{
     
     @Override
     public void mouseMoved(MouseEvent e) {
-        if (Math.sqrt((e.getX()-Xc)*(e.getX()-Xc) + (e.getY()-Yc)*(e.getY()-Yc)) < sR){
+    	double distance = Math.sqrt((e.getX()-Xc)*(e.getX()-Xc) + (e.getY()-Yc)*(e.getY()-Yc));
+        if (distance < sR){
         	current = Color.green;
         	active = true;
+        	distance = (distance == 0) ? 0.000001: distance;
+        	
+        	float hsbVals[] = Color.RGBtoHSB(current.getRed(), current.getGreen(), current.getBlue(), null);
+			current = Color.getHSBColor(hsbVals[0], hsbVals[1], (float) (15/distance));
         	sw.stop();
         	this.repaint();
         }
