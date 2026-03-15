@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Working Memory</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!--
+        Main canvas — sized to 1200×800 px in app.js to match the Java JFrame.
+        CSS (max-width / max-height) scales it down on smaller screens without
+        distorting the logical coordinate space.
+    -->
+    <canvas id="canvas"></canvas>
+    <p id="hint">Move your mouse to activate memories</p>
+
+    <!-- circle.js must load before app.js because app.js uses the Circle class -->
+    <script src="circle.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
